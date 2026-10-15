@@ -13,7 +13,7 @@ A machine learning repository classifying simulated hadronically decaying partic
 | **Joint Autoencoder + MLP** | Particle Constituents ($30 \times 3$) | 17.1 K | **87.1%** | **0.937** | **32.5** |
 | **JetCNN** | Jet Images ($25 \times 25 \times 1$) | 37.9 K | **87.4%** | **0.944** | **51.8** |
 
-*Note: Background Rejection Factor ($R_{50} = 1/\epsilon_B$) is measured at a fixed Signal Efficiency ($\epsilon_S = 0.50$).*
+*Note*: Background Rejection Factor ($R_{50} = 1/\epsilon_B$) is measured at a fixed Signal Efficiency ($\epsilon_S = 0.50$).
 
 ## Physics Context $\rightarrow$ Industry ML Mapping
 - **Jet Tagging**: Binary/Multi-class classification of unordered particle point clouds.
