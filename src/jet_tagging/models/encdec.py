@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 
 class EncDec(nn.Module):
-
     def __init__(
         self,
         input_size: int = 90,

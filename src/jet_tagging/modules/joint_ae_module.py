@@ -7,9 +7,7 @@ from jet_tagging.utils.metrics import BackgroundRejectionAtEfficiency
 
 
 class JointAutoencoderModule(pl.LightningModule):
-    def __init__(
-        self, model: torch.nn.Module, alpha: float = 0.1, lr: float = 1e-3
-    ):
+    def __init__(self, model: torch.nn.Module, alpha: float = 0.1, lr: float = 1e-3):
         super().__init__()
         self.save_hyperparameters(ignore=["model"])
         self.model = model

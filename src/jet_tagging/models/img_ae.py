@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 
 class ImageAutoencoder(nn.Module):
-
     def __init__(self, latent_dim: int = 32) -> None:
         super().__init__()
 

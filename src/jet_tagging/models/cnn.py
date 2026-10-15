@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 
 class JetCNN(nn.Module):
-
     def __init__(
         self,
         in_channels: int = 1,
