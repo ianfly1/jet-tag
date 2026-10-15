@@ -15,10 +15,9 @@ class BackgroundRejectionAtEfficiency(Metric):
         self.target.append(target)
 
     def compute(self) -> torch.Tensor:
-        preds = torch.cat(self.preds)
-        target = torch.cat(self.target)
+        preds = torch.cat(self.preds).cpu()
+        target = torch.cat(self.target).cpu()
         
-        # Binary signal class to be 1
         scores = torch.softmax(preds, dim=-1)[:, 1] if preds.ndim > 1 else preds
         
         signal_mask = (target == 1)
@@ -30,7 +29,6 @@ class BackgroundRejectionAtEfficiency(Metric):
         if len(signal_scores) == 0 or len(bkg_scores) == 0:
             return torch.tensor(0.0)
 
-        # Quantile threshold corresponding to target signal efficiency
         threshold = torch.quantile(signal_scores, 1.0 - self.target_eff)
         false_positives = (bkg_scores >= threshold).sum().float()
         total_bkg = bkg_scores.numel()

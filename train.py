@@ -47,11 +47,15 @@ def main(cfg: DictConfig):
     # 3. Setup Callbacks and Loggers
     logger = TensorBoardLogger("runs", name=cfg.model.name)
     callbacks = [
-        ModelCheckpoint(
-            dirpath="checkpoints", monitor="val/loss", mode="min", save_top_k=1
-        ),
-        EarlyStopping(monitor="val/loss", patience=5, mode="min"),
-    ]
+    ModelCheckpoint(
+        dirpath=f"checkpoints/{cfg.model.name}",
+        filename="{epoch:02d}-{val_loss:.4f}",
+        monitor="val/loss",
+        mode="min",
+        save_top_k=1,
+    ),
+    EarlyStopping(monitor="val/loss", patience=5, mode="min"),
+]
 
     # 4. Trainer Initialization
     trainer = pl.Trainer(

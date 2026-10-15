@@ -76,7 +76,6 @@ class JetDataModule(LightningDataModule):
             labels = np.where(raw_labels == 2, 1, 0)
             features = particle_data.reshape(particle_data.shape[0], -1)
 
-            # Manual index splitting to fit scaler WITHOUT DATA LEAKAGE
             num_samples = len(features)
             indices = np.arange(num_samples)
             np.random.seed(self.hparams.seed)
@@ -88,7 +87,6 @@ class JetDataModule(LightningDataModule):
             val_idx = indices[:val_len]
             test_idx = indices[val_len:val_len + test_len]
 
-            # Scaler fitted ONLY on train set
             X_train = self.scaler.fit_transform(features[train_idx])
             X_val = self.scaler.transform(features[val_idx])
             X_test = self.scaler.transform(features[test_idx])
