@@ -1,0 +1,5 @@
+name: "cnn"
+type: "classifier"
+in_channels: 1
+im_size: 25
+num_classes: 2

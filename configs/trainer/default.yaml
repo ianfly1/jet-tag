@@ -1,0 +1,3 @@
+epochs: 10
+accelerator: "auto"
+devices: 1

@@ -1,0 +1,5 @@
+name: "encdec"
+type: "joint_ae"
+input_size: 90
+latent_dim: 16
+output_size: 2

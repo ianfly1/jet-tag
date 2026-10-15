@@ -13,9 +13,14 @@ class JetClassificationModule(pl.LightningModule):
         self.criterion = torch.nn.CrossEntropyLoss()
 
         self.train_acc = BinaryAccuracy()
+
         self.val_acc = BinaryAccuracy()
         self.val_auroc = BinaryAUROC()
         self.val_rej50 = BackgroundRejectionAtEfficiency(target_eff=0.50)
+
+        self.test_acc = BinaryAccuracy()
+        self.test_auroc = BinaryAUROC()
+        self.test_rej50 = BackgroundRejectionAtEfficiency(target_eff=0.50)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.model(x)
@@ -48,6 +53,23 @@ class JetClassificationModule(pl.LightningModule):
         self.log("val/acc", self.val_acc, prog_bar=True)
         self.log("val/auroc", self.val_auroc, prog_bar=True)
         self.log("val/rej50", self.val_rej50, prog_bar=True)
+
+    def test_step(self, batch, batch_idx):
+        x, y = batch
+        logits = self(x)
+        loss = self.criterion(logits, y)
+
+        probs = torch.softmax(logits, dim=-1)[:, 1]
+        preds = torch.argmax(logits, dim=-1)
+
+        self.test_acc(preds, y)
+        self.test_auroc(probs, y)
+        self.test_rej50(probs, y)
+
+        self.log("test/loss", loss, prog_bar=True)
+        self.log("test/acc", self.test_acc, prog_bar=True)
+        self.log("test/auroc", self.test_auroc, prog_bar=True)
+        self.log("test/rej50", self.test_rej50, prog_bar=True)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
