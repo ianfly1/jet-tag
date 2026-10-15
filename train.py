@@ -5,7 +5,7 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 
 from src.jet_tagging.datamodules.jetnet_datamodule import JetDataModule
-from src.jet_tagging.models.encdec import encdec
+from src.jet_tagging.models.encdec import EncDec
 from src.jet_tagging.modules.joint_ae_module import JointAutoencoderModule
 
 @hydra.main(version_base="1.3", config_path="configs", config_name="config")
@@ -18,7 +18,7 @@ def main(cfg: DictConfig):
         batch_size=cfg.data.batch_size
     )
 
-    model = encdec(input_size=cfg.model.input_size, output_size=cfg.model.output_size)
+    model = EncDec(input_size=cfg.model.input_size, output_size=cfg.model.output_size)
     system = JointAutoencoderModule(model=model, alpha=cfg.alpha, lr=cfg.lr)
 
     logger = TensorBoardLogger("runs", name=cfg.model.name)
