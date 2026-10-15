@@ -24,8 +24,8 @@ A machine learning repository classifying simulated hadronically decaying partic
 
 ```bash
 # 1. Clone & create virtual environment
-git clone [https://github.com/ianfly1/jet-tagging-dl.git](https://github.com/ianfly1/jet-tagging-dl.git)
-cd jet-tagging-dl
+git clone [https://github.com/ianfly1/jet-tag.git](https://github.com/ianfly1/jet-tag.git)
+cd jet-tag
 python3.11 -m venv .venv
 source .venv/bin/activate
 
